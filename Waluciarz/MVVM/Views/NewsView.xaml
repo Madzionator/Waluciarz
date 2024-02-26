@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Waluciarz.MVVM.Views.NewsView"
              x:Name="root"
-             Title="NewsView">
+             Title="Najnowsze informacje">
     <ListView ItemsSource="{Binding News}">
         <ListView.ItemTemplate>
             <DataTemplate>
