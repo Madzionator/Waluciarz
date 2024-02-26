@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Waluciarz.MVVM.Views.NewsView"
+             x:Name="root"
+             Title="NewsView">
+    <ListView ItemsSource="{Binding News}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Border Padding="5" BackgroundColor="#222" Margin="5,5,5,0" >
+                        <Grid Padding="10" ColumnSpacing="5">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding BindingContext.OpenLinkCommand, Source={x:Reference root}}"  
+                                    CommandParameter="{Binding Link}" />
+                            </Grid.GestureRecognizers>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="7*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.RowSpan="3" 
+                                   Source="{Binding ImageUrl}"
+                                   Aspect="AspectFill" />
+
+                            <Label Grid.Column="1" TextColor="#9B5CD5"
+                               FontSize="18"
+                                   Text="{Binding Title}"
+                                   FontAttributes="Bold" />
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding Description}"
+                                   FontAttributes="None"/>
+                            <Label Grid.Row="2" Grid.Column="1"
+                               Text="{Binding PubDate, StringFormat='{0:dd MMMM yyyy}'}"
+                               FontAttributes="Italic" TextColor="Gray" VerticalOptions="End"/>
+                        </Grid>
+                    </Border>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

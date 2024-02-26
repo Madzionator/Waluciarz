@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Waluciarz.Controls"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:Class="Waluciarz.MVVM.Views.ExchangeRateView"
+             Title="ExchangeRateView">
+
+    <VerticalStackLayout>
+
+        <Label Margin="10"
+            Text="Aktualny kurs walut"
+            FontSize="18"
+            TextTransform="Uppercase"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <controls:MyPicker ItemsSource="{Binding Currencies}" SelectedItem="{Binding CurrencyFrom, Mode=TwoWay}"
+                               VerticalOptions="Start"  ItemChangedCommand="{Binding ChangeChartCommand}"/>
+
+            <controls:MyPicker ItemsSource="{Binding Currencies}" SelectedItem="{Binding CurrencyTo, Mode=TwoWay}"
+                               ItemChangedCommand="{Binding ChangeChartCommand}"
+                               Grid.Column="1"
+                               VerticalOptions="Start" />
+        </Grid>
+
+        <lvc:CartesianChart
+            HeightRequest="300"
+            Series="{Binding Series}"
+            XAxes="{Binding Axes}"
+            TooltipPosition="Top"
+            TooltipFindingStrategy="CompareAll">
+
+        </lvc:CartesianChart>
+
+        <Grid Margin="20,35,20,0" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="20*" />
+            </Grid.ColumnDefinitions>
+
+            <BoxView Grid.ColumnSpan="2"
+                     Color="#536262"/>
+
+            <BoxView Grid.Row="0"
+                     Margin="5,5,5,5"
+                     Color="#A5BCBC"/>
+
+            <BoxView Grid.Row="0"
+                     Grid.Column="1" Margin="5,5,5,5"
+                     Color="#46DBF8"/>
+
+            <Label TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding CurrencyFrom.Symbol, StringFormat='Aktualna wartosc 1 {0} ='}" VerticalOptions="Center"/>
+            <Label TextColor="Black" FontAttributes="Bold" Grid.Column="1" FontSize="18" HorizontalTextAlignment="Center" Text="{Binding ActualRate}" VerticalOptions="Center"/>
+        </Grid>
+
+        <Grid Margin="20,0,20,20" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="20*" />
+            </Grid.ColumnDefinitions>
+
+            <BoxView Grid.Row="0"
+                     Grid.ColumnSpan="2" Margin="5,5,5,5"
+                     Color="#536262"/>
+
+            <BoxView Grid.Row="1"
+                     Margin="5,5,5,5"
+                     Color="#219640"/>
+
+            <BoxView Grid.Row="1" Grid.Column="1"
+                     Margin="5,5,5,5"
+                     Color="#9D4040"/>
+
+            <Label Grid.ColumnSpan="2" Text="Wartości skrajne w ostatnich 2tyg:" VerticalOptions="Center"  HorizontalTextAlignment="Center" />
+            <Label Grid.Row="1" Grid.Column="1" FontSize="18" Text="{Binding LowestRate}" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+            <Label Grid.Row="1" FontSize="18" Text="{Binding HighestRate}" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+
+        </Grid>
+
+
+        <Grid Margin="20,0,20,20" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="20*" />
+            </Grid.ColumnDefinitions>
+
+            <BoxView Grid.Row="0"
+                     Grid.ColumnSpan="1" Margin="5,5,5,5"
+                     Color="#536262"/>
+
+            <BoxView Grid.Row="0" Grid.Column="1"
+                     Margin="5,5,5,5"
+                     Color="#297280"/>
+
+            <Label Text="Aktualna wartość względem średniej wartości ostatnich 13 dni:" VerticalOptions="Center"  HorizontalTextAlignment="Center" />
+            <Label Grid.Row="1" Grid.Column="1" FontSize="18" Text="{Binding AvgIncreasePercent}" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+
+        </Grid>
+
+
+    </VerticalStackLayout>
+
+</ContentPage>
